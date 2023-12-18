@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongodbsvc
+spec:
+  selector:
+    app: mongodb
+    env: stg
+    version: beta
+  type: ClusterIP
+  ports:
+  - name: mongodbport
+    targetPort: 27017
+    port: 27017

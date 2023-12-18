@@ -33,30 +33,6 @@ spec:
           limits:
             cpu: "4"
             memory: "4G"
-        livenessProbe:
-          exec:
-            command:
-            - mongo
-            - --disableImplicitSessions
-            - --eval
-            - "db.adminCommand('ping')"
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 6
-        readinessProbe:
-          exec:
-            command:
-            - mongo
-            - --disableImplicitSessions
-            - --eval
-            - "db.adminCommand('ping')"
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 6
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
@@ -69,9 +45,9 @@ spec:
               name: mongodbsec
               key: password
         volumeMounts:
-        - name: "mongo-data-dir"
+        - name: "mongodata"
           mountPath: "/data/db"
       volumes:
-      - name: "mongodatad"
+      - name: "mongodata"
         persistentVolumeClaim:
           claimName: "mongodatapvc"

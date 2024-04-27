@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:8.0.0-SNAPSHOT
+        ports:
+        - containerPort: 5601
+        env:
+        - name: ELASTICSEARCH_HOST
+          value: "elasticsearch"  # Point to the DNS name of the Elasticsearch service
+        resources:
+          requests:
+            cpu: "2"
+            memory: "2G"
+          limits:
+            cpu: "4"
+            memory: "4G"

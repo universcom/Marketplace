@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:8.0.0-SNAPSHOT
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ELASTICSEARCH_HOST
+          value: "elasticsearch"  # Point to the DNS name of the Elasticsearch service
+        resources:
+          requests:
+            cpu: "2"
+            memory: "2G"
+          limits:
+            cpu: "4"
+            memory: "4G"
